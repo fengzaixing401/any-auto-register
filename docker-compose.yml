@@ -1,11 +1,13 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        CAMOUFOX_VERSION: ${CAMOUFOX_VERSION:-135.0.1}
-        CAMOUFOX_RELEASE: ${CAMOUFOX_RELEASE:-beta.24}
+    image: ghcr.io/fengzaixing401/any-auto-register:latest
+    # Uncomment below to build locally instead of using pre-built image
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    #   args:
+    #     CAMOUFOX_VERSION: ${CAMOUFOX_VERSION:-135.0.1}
+    #     CAMOUFOX_RELEASE: ${CAMOUFOX_RELEASE:-beta.24}
     container_name: any-auto-register
     init: true
     restart: unless-stopped
