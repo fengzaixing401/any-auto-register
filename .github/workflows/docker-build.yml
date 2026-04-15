@@ -1,0 +1,44 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+      - fzx
+  pull_request:
+    branches:
+      - fzx
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: any-auto-register:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            CAMOUFOX_VERSION=135.0.1
+            CAMOUFOX_RELEASE=beta.24
+
+      - name: Build summary
+        run: |
+          echo "✅ Docker image built successfully for platforms: linux/amd64, linux/arm64"
+          echo "📦 Image tag: any-auto-register:test"
