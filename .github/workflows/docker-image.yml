@@ -3,10 +3,7 @@ name: docker-image
 on:
   push:
     branches:
-      - main
-      - master
-    tags:
-      - "v*"
+      - fzx
   workflow_dispatch:
 
 permissions:
